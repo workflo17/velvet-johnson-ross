@@ -1262,3 +1262,10 @@ main > .wrap{
 }
 .plate-pair .plate{margin:0}
 .plate-pair > .prose{max-width:none}
+
+
+/* a tall portrait used as a page lead: constrain it, don't let it band across */
+.plate.lead{max-width:min(440px,100%)}
+@media (min-width:900px){
+  .plate.lead{max-width:400px}
+}
