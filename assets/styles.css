@@ -1594,3 +1594,15 @@ a.init:hover .go{color:var(--brick-ink)}
   .site-header .bar{flex-wrap:nowrap}
   .site-nav{min-width:0;max-width:100%}
 }
+
+/* The "view as table" fallback is the accessible route to the chart data, and
+   its 6-column table ran 394px wide at a 390px viewport — opening it pushed the
+   whole page sideways and shunted the last two columns off screen. It now sits
+   in the same scroll container the charts use, so the table keeps its
+   semantics rather than being re-laid out as a block. */
+.table-view .chart-scroll{margin-top:10px}
+
+/* a project card's title link was a 28px target on a phone */
+@media (max-width:760px){
+  .init-top h3 a{display:inline-block;padding-block:4px;min-height:32px;box-sizing:border-box}
+}
