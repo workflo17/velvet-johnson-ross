@@ -1292,3 +1292,25 @@ main > .wrap{
 @media (min-width:860px){
   .plate-pair{grid-template-columns:minmax(0,1fr) minmax(260px,.75fr)}
 }
+
+/* ==========================================================================
+   AUDIT FIXES
+   Measured on the live site across all 8 pages, both themes, with proper
+   alpha compositing over the gradient ground.
+   ========================================================================== */
+
+/* Footer headings and the legal line sat at 4.2:1 in light mode (needs 4.5).
+   The footer is a translucent panel over the rose gradient, which is lighter
+   in the light theme, so the 62% white text lost contrast there. */
+.site-footer h4{color:rgba(255,244,247,.86)}
+.legal{color:rgba(255,244,247,.84)}
+
+/* The "next page" link was a 30px touch target. Padding lifts it clear of the
+   32px floor without changing how it reads. */
+.next a{
+  display:inline-block;
+  padding-block:8px;
+  min-height:44px;
+  box-sizing:border-box;
+}
+.next{align-items:center}
