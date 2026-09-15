@@ -1529,3 +1529,10 @@ a.init:hover .go{color:var(--brick-ink)}
    than every other one — enough to read as a hole rather than as rhythm. */
 .page.stack > section > :last-child{margin-bottom:0}
 .page.stack > section > :first-child{margin-top:0}
+
+/* Never upscale a picture past its own pixels. .portrait img is width:100%, so
+   a figure that filled its column stretched the 560px #HerHousing illustration
+   to 833px and softened it. fit-content caps the figure at the image's natural
+   width while still letting it shrink on a narrow screen. */
+.portrait{width:fit-content;max-width:100%}
+.portrait img{height:auto}
