@@ -1269,3 +1269,26 @@ main > .wrap{
 @media (min-width:900px){
   .plate.lead{max-width:400px}
 }
+
+
+/* ==========================================================================
+   PLATE SIZING — corrected
+   .plate inherited --measure (66ch). That is the right width for a column of
+   prose, but it turns a square graphic into a 572px slab and made the Hamer
+   poster 91% of viewport height. Images are sized by their shape instead, and
+   never past their natural width.
+   ========================================================================== */
+.plate{max-width:min(420px,100%)}
+.plate img{max-width:100%;height:auto}
+.plate.wide{max-width:var(--measure)}       /* landscape may run the measure */
+.plate.lead{max-width:min(380px,100%)}
+@media (min-width:900px){.plate.lead{max-width:360px}}
+
+/* inside a pair the grid column sets the width */
+.plate-pair .plate{max-width:none;margin:0}
+.plate-pair .plate img{width:100%}
+
+/* a pair should not collapse the image to a sliver on mid widths */
+@media (min-width:860px){
+  .plate-pair{grid-template-columns:minmax(0,1fr) minmax(260px,.75fr)}
+}
