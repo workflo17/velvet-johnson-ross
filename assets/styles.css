@@ -1445,3 +1445,31 @@ a.init:hover .go{color:var(--brick-ink)}
 @media print{
   .pager,.onpage,.routes .go{display:none!important}
 }
+
+/* ==========================================================================
+   AUDIT FIXES — second pass
+   ========================================================================== */
+
+/* The "/" separators in the at-a-glance list were painted with --rule-strong,
+   a hairline token, giving 1.86:1 light / 1.76:1 dark. They are the only thing
+   dividing four run-together items ("Rental assistance vouchersSource-of-income
+   discrimination..."), so they are content, not decoration. --ink-faint reads
+   at 4.97:1 and still sits below the items it separates. */
+.glance .sep{color:var(--ink-faint)}
+
+/* Standalone card links — the org-card call to action and the quote citation —
+   were 14-15px tall on a phone, under the 32px floor. They are the home page's
+   main routes out, so they get a real target. Inline links inside a sentence
+   are left alone: padding there would break the line box. */
+@media (max-width:760px){
+  .org-item .link a,
+  .pull cite a,
+  .init .go{
+    display:inline-block;
+    padding-block:9px;
+    min-height:32px;
+    box-sizing:border-box;
+  }
+  .org-item .link{padding-top:2px}
+  .pull cite a{padding-block:8px}
+}
