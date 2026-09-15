@@ -1522,3 +1522,10 @@ a.init:hover .go{color:var(--brick-ink)}
   color:var(--brick-on);
   border-bottom:0;
 }
+
+/* A section's own children must not add margin at the section's edges. The
+   .stack gap already separates sections, so a trailing .quote-inset or
+   .plate-pair margin-bottom made two boundaries on Background 38px airier
+   than every other one — enough to read as a hole rather than as rhythm. */
+.page.stack > section > :last-child{margin-bottom:0}
+.page.stack > section > :first-child{margin-top:0}
