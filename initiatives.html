@@ -153,7 +153,7 @@
             <p class="fig-title">Annual operating budget, 150 households</p>
             <p class="fig-sub">Roughly 57 percent of the budget reaches households directly; the remainder funds the liaison who does the accompanying, plus administration.</p>
           </figcaption>
-          <div class="chart-scroll">
+          <div class="chart-scroll" tabindex="0" role="region" aria-label="Chart, scrollable horizontally">
             <table class="data" style="margin-top:16px">
               <thead>
                 <tr>
@@ -180,6 +180,7 @@
               </tbody>
             </table>
           </div>
+          <p class="scroll-hint">Scroll the table sideways &rarr;</p>
           <p class="fig-note">Figures from the 2022 proposal document. Direct-to-household support totals $56,550 &mdash; $377 per household.</p>
         </figure>
       </section>
@@ -299,6 +300,26 @@
     try{localStorage.setItem('vjr-theme',next);}catch(e){}
     sync();
   });
+})();
+</script>
+<button class="to-top" type="button" id="toTop" aria-label="Back to top">&#8593;</button>
+<script>
+(function(){
+  /* keep the current nav item visible in the scrollable mobile nav */
+  var cur=document.querySelector('.site-nav a[aria-current="page"]');
+  if(cur&&cur.scrollIntoView){try{cur.scrollIntoView({block:'nearest',inline:'center'});}catch(e){}}
+
+  /* back to top, shown once the page has actually been scrolled */
+  var b=document.getElementById('toTop');
+  if(b){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var onScroll=function(){b.setAttribute('data-show',(window.scrollY>700)?'1':'0');};
+    onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+    b.addEventListener('click',function(){
+      window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+      var s=document.querySelector('.skip'); if(s)s.focus();
+    });
+  }
 })();
 </script>
 </body>

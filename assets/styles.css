@@ -14,7 +14,7 @@
   --photo-field:#FBF6F5;
   --ink:#241A1E;
   --ink-soft:#5E4C53;
-  --ink-faint:#8A757C;
+  --ink-faint:#7A646B;
   --brick:#A4406E;
   --brick-ink:#93365F;
   --brick-wash:#F7E4EC;
@@ -50,7 +50,7 @@
     --photo-field:#FBF6F5;
     --ink:#F3E9EC;
     --ink-soft:#B3A0A8;
-    --ink-faint:#8D7B83;
+    --ink-faint:#9C8A92;
     --brick:#D98BAC;
     --brick-ink:#E8A2C0;
     --brick-wash:#33202A;
@@ -73,7 +73,7 @@
   --photo-field:#FBF6F5;
   --ink:#F3E9EC;
   --ink-soft:#B3A0A8;
-  --ink-faint:#8D7B83;
+  --ink-faint:#9C8A92;
   --brick:#D98BAC;
   --brick-ink:#E8A2C0;
   --brick-wash:#33202A;
@@ -1055,3 +1055,147 @@ main > .wrap{
 :root[data-mode="dark"] .theme-toggle .ico-moon{display:inline}
 :root[data-mode="dark"] .theme-toggle .ico-sun{display:none}
 @media print{.theme-toggle{display:none}}
+
+
+/* ==========================================================================
+   POLISH PASS
+   Fixes found by auditing the live site: contrast, mobile header height,
+   focus visibility on the rose header, chart scroll access, and print.
+   ========================================================================== */
+
+/* ---- 1. focus must be visible on the rose header, not just on the sheet ---- */
+.site-header :focus-visible,
+.site-footer :focus-visible{
+  outline:3px solid #fff;
+  outline-offset:2px;
+}
+
+/* ---- 2. compact mobile header ----------------------------------------------
+   Was 148px sticky (18% of a phone screen) because the nav wrapped to two rows.
+   Below 760px the nav becomes one horizontally scrollable row (~90px total). */
+@media (max-width:760px){
+  .site-header .bar{
+    min-height:0;
+    padding-block:0;
+    gap:0;
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .brand{
+    padding-block:10px;
+    font-size:14px;
+    align-self:flex-start;
+  }
+  .site-nav{
+    margin-left:0;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:2px;
+    /* bleed to the screen edges so the row reads as scrollable */
+    margin-inline:calc(var(--gut) * -1);
+    padding-inline:var(--gut);
+  }
+  .site-nav::-webkit-scrollbar{display:none}
+  .site-nav a{padding:9px 10px;font-size:13.5px}
+  .theme-toggle{margin-left:6px;flex:none}
+}
+
+/* ---- 3. eyebrow: .2em tracking was too wide to fit a phone line ---- */
+@media (max-width:520px){
+  .eyebrow{font-size:10px;letter-spacing:.12em}
+  .eyebrow::before{width:18px}
+}
+
+/* ---- 4. hero actions: let buttons share the row evenly instead of 2 + 1 ---- */
+@media (max-width:520px){
+  .hero-actions{gap:8px}
+  .hero-actions .btn{flex:1 1 auto;text-align:center;padding-inline:14px}
+}
+
+/* ---- 5. scrollable chart: make the overflow visible and reachable ----------
+   The figure is wider than a phone, so it scrolls. Give it an edge fade so the
+   cut-off is legible, and a focus ring since it is keyboard scrollable. */
+.chart-scroll{
+  position:relative;
+  scrollbar-width:thin;
+}
+.chart-scroll:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.scroll-hint{
+  display:none;
+  font-family:var(--f-mono);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);
+  margin:8px 0 0;
+}
+@media (max-width:760px){
+  .scroll-hint{display:block}
+}
+
+/* ---- 6. back to top, for the long pages (press is ~9,400px on a phone) ---- */
+.to-top{
+  position:fixed;
+  right:clamp(12px,3vw,24px);
+  bottom:clamp(12px,3vw,24px);
+  z-index:60;
+  width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--brick);
+  color:var(--brick-on);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  font-size:17px;line-height:1;
+  cursor:pointer;
+  box-shadow:0 2px 12px rgba(60,24,40,.3);
+  opacity:0;visibility:hidden;
+  transition:opacity .18s ease, visibility .18s ease;
+}
+.to-top[data-show="1"]{opacity:1;visibility:visible}
+.to-top:hover{background:var(--ink);color:var(--ground)}
+@media (prefers-reduced-motion:reduce){.to-top{transition:none}}
+
+/* ==========================================================================
+   PRINT — must come last. The gradient ground was defined after the original
+   print block and was overriding it, so pages printed as a full-bleed rose.
+   ========================================================================== */
+@media print{
+  :root{
+    --ground:#fff; --sheet:#fff; --surface:#fff; --sunk:#fff;
+    --photo-field:#fff;
+    --ink:#000; --ink-soft:#222; --ink-faint:#444;
+    --rule:#ccc; --rule-strong:#999;
+    --brick:#000; --brick-ink:#000; --brick-wash:#fff; --brick-on:#fff;
+    --slate:#000; --slate-wash:#fff;
+    --grad:none;
+  }
+  body{
+    background:#fff !important;
+    color:#000;
+    font-size:11pt;
+  }
+  main{padding-inline:0}
+  main > .wrap{
+    background:#fff !important;
+    box-shadow:none !important;
+    margin:0;
+    max-width:none;
+    padding-inline:0;
+  }
+  .site-header,.site-nav,.theme-toggle,.next,.hero-actions,
+  .site-footer ul,.skip,.to-top,.scroll-hint{display:none !important}
+  .site-footer{background:#fff !important;border-top:1px solid #ccc}
+  .page{padding-block:0}
+  a{color:#000;text-decoration:none}
+  .press-row a[href^="http"]::after,
+  .sources a[href^="http"]::after{
+    content:" (" attr(href) ")";
+    font-size:8.5pt;color:#555;word-break:break-all;
+  }
+  .portrait img{mix-blend-mode:normal;filter:none}
+  .chart-scroll{overflow:visible}
+  .chart{min-width:0}
+  section,.entry,.figure,.role-block,.press-row{break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+}

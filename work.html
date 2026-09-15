@@ -92,7 +92,7 @@
             <span><i style="background:var(--series-appropriated)"></i>Appropriated by the State</span>
           </div>
 
-          <div class="chart-scroll">
+          <div class="chart-scroll" tabindex="0" role="region" aria-label="Chart, scrollable horizontally">
             <svg class="chart" viewBox="0 0 720 250" role="img"
                  aria-label="Bar chart. First-year funding requested in 2021: 500 million dollars. First-year appropriation in 2026: 50 million dollars. Annual funding now sought: 250 million dollars.">
 
@@ -137,6 +137,7 @@
               <text class="tick" x="600" y="232" text-anchor="middle">$500M</text>
             </svg>
           </div>
+          <p class="scroll-hint">Scroll the chart sideways &rarr;</p>
 
           <details class="table-view">
             <summary>View as table</summary>
@@ -386,6 +387,26 @@
     try{localStorage.setItem('vjr-theme',next);}catch(e){}
     sync();
   });
+})();
+</script>
+<button class="to-top" type="button" id="toTop" aria-label="Back to top">&#8593;</button>
+<script>
+(function(){
+  /* keep the current nav item visible in the scrollable mobile nav */
+  var cur=document.querySelector('.site-nav a[aria-current="page"]');
+  if(cur&&cur.scrollIntoView){try{cur.scrollIntoView({block:'nearest',inline:'center'});}catch(e){}}
+
+  /* back to top, shown once the page has actually been scrolled */
+  var b=document.getElementById('toTop');
+  if(b){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var onScroll=function(){b.setAttribute('data-show',(window.scrollY>700)?'1':'0');};
+    onScroll(); window.addEventListener('scroll',onScroll,{passive:true});
+    b.addEventListener('click',function(){
+      window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+      var s=document.querySelector('.skip'); if(s)s.focus();
+    });
+  }
 })();
 </script>
 </body>
