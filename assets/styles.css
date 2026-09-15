@@ -1224,3 +1224,41 @@ main > .wrap{
   font-style:normal;
   color:color-mix(in srgb, var(--brick-on) 82%, transparent);
 }
+
+
+/* ==========================================================================
+   PLATES
+   Supplied artwork carries its own palettes (navy, terracotta, sepia, black).
+   Rather than tint them into the rose system, each gets the same frame and a
+   mono caption, so they read as a deliberate plate section in a monograph.
+   ========================================================================== */
+.plate{
+  margin:clamp(24px,4vw,38px) 0;
+  max-width:var(--measure);
+}
+.plate img{
+  width:100%;
+  display:block;
+  border:1px solid var(--rule-strong);
+}
+.plate figcaption{
+  margin-top:10px;
+  font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.09em;
+  color:var(--ink-faint);
+  line-height:1.6;
+}
+.plate.wide{max-width:none}
+
+/* a plate that sits beside prose on wide screens */
+.plate-pair{
+  display:grid;gap:clamp(18px,3vw,30px);
+  grid-template-columns:minmax(0,1fr);
+  align-items:start;
+  margin:clamp(24px,4vw,38px) 0;
+}
+@media (min-width:860px){
+  .plate-pair{grid-template-columns:minmax(0,1fr) minmax(0,.82fr)}
+}
+.plate-pair .plate{margin:0}
+.plate-pair > .prose{max-width:none}
