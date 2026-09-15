@@ -1606,3 +1606,37 @@ a.init:hover .go{color:var(--brick-ink)}
 @media (max-width:760px){
   .init-top h3 a{display:inline-block;padding-block:4px;min-height:32px;box-sizing:border-box}
 }
+
+/* ==========================================================================
+   Pictures no longer sit beside the text.
+
+   .plate-pair put a paragraph in one column and a picture in the other. The
+   paragraphs are three or four lines (146-340px); the pictures are 390-500px.
+   Nothing fills the difference, so the text column always had a hole in it —
+   below the text with align-items:start, and above *and* below once I centred
+   it, which is worse: it pushed the opening line away from its own heading.
+
+   No alignment fixes a column that is half as tall as the one beside it. The
+   picture now follows the text at readable width, the way the lead portrait
+   already does, and the prose runs as one clean column.
+   ========================================================================== */
+.plate-pair{display:block;margin:0}
+.plate-pair > .prose{max-width:var(--measure)}
+.plate-pair .plate{
+  max-width:min(420px,100%);
+  margin:clamp(20px,2.6vw,28px) 0 0;
+}
+@media (min-width:860px){
+  .plate-pair{grid-template-columns:none}
+  .plate-pair .plate{max-width:min(420px,100%)}
+}
+
+/* A section heading drew a rule the full width of the container — 1096px at a
+   1440px window — over a text column of 572px. The rule was advertising room
+   the section never uses. Where everything under the heading is measure-width,
+   the rule matches it; sections with a genuinely wide block keep the full rule. */
+.page.stack > section:not(:has(.record,.press,.roles,.figures,.figure,.orgs,.tags,
+  .members,.glance,.chart-scroll,.press-compact,.routes,.contact,.doc-meta,
+  .practice,.bills,.hero)) > .s-head{
+  max-width:var(--measure);
+}
