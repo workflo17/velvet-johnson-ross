@@ -1473,3 +1473,52 @@ a.init:hover .go{color:var(--brick-ink)}
   .org-item .link{padding-top:2px}
   .pull cite a{padding-block:8px}
 }
+
+/* ==========================================================================
+   GAPS — three holes in the page, all reported as "gaps in the text"
+   ========================================================================== */
+
+/* 1. A short paragraph beside a tall picture left a hole under the text.
+      .plate-pair was align-items:start, so a four-line paragraph (146px) sat
+      against a 389px collage and the column below it was simply empty — 243px
+      of nothing on Background, 156px more in the section under it.
+      Centring splits that space above and below the text, which reads as
+      deliberate rather than as a dropout. */
+.plate-pair{align-items:center}
+
+/* Below the breakpoint the pair is one column and centring is meaningless, but
+   an oversized picture still pushes the two blocks apart — cap it there. */
+@media (max-width:859px){
+  .plate-pair{align-items:stretch}
+  .plate-pair .plate{max-width:min(420px,100%)}
+}
+
+/* 2. The on-page index is now inside .page-head, so the .stack flex gap no
+      longer lands between the two. It used to add 72px of stack gap to the
+      index's own 34px margin: a 106px void under every page title. */
+.onpage{
+  margin-top:clamp(20px,2.6vw,28px);
+  padding-top:14px;
+  gap:7px;
+}
+
+/* 3. The separator bars hung off the front of wrapped rows — a stray vertical
+      stroke to the left of "The classroom and the archive". A wrapping list
+      cannot know which item starts a row, so the items carry their own edges
+      instead, matching the chips already used for competencies and
+      memberships. This also gives each one a real tap target. */
+.onpage a{
+  padding:6px 11px;
+  margin-right:0;
+  background:var(--sunk);
+  color:var(--ink-soft);
+  border-bottom:0;
+  font-size:12.5px;
+}
+.onpage a::before{content:none}
+.onpage a + a::before{content:none}
+.onpage a:hover{
+  background:var(--brick);
+  color:var(--brick-on);
+  border-bottom:0;
+}
