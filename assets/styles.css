@@ -1575,3 +1575,22 @@ a.init:hover .go{color:var(--brick-ink)}
 .figure{padding:clamp(18px,3vw,26px)}           /* was 20-30px */
 .hero{padding-block:clamp(24px,4vw,52px) clamp(26px,4vw,44px)}  /* bottom was 32-60px */
 .pager{padding-top:12px}                        /* was 16px */
+
+/* ==========================================================================
+   The mobile nav never actually scrolled, and pushed every page sideways.
+
+   Below 760px .site-header .bar becomes a column flex container, and it also
+   carried flex-wrap:wrap from the desktop rule. In a *wrapping column*
+   container an item is sized by its own content, not stretched to the
+   container — so .site-nav computed to 611px wide inside a 375px bar, its
+   overflow-x:auto never engaged, and the document scrolled horizontally on
+   every page. nowrap lets align-items:stretch do its job; min-width:0 lets
+   the flex item shrink below its content so the strip scrolls instead.
+
+   This hid for a while because the nav's natural width is ~611px and the
+   emulated viewport in testing happened to be 611px, where it exactly fits.
+   ========================================================================== */
+@media (max-width:760px){
+  .site-header .bar{flex-wrap:nowrap}
+  .site-nav{min-width:0;max-width:100%}
+}
