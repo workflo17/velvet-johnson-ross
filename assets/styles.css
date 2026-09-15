@@ -1199,3 +1199,28 @@ main > .wrap{
   section,.entry,.figure,.role-block,.press-row{break-inside:avoid}
   h1,h2,h3{break-after:avoid}
 }
+
+/* ---- feature quote: full-bleed on the brand rose, for a borrowed voice ---- */
+.quote-feature{
+  background:var(--brick);
+  color:var(--brick-on);
+  padding:clamp(28px,5vw,52px);
+  margin-block:clamp(26px,4vw,38px);
+  max-width:74ch;
+}
+.quote-feature blockquote{
+  margin:0;
+  font-family:var(--f-display);
+  font-weight:700;
+  font-size:clamp(1.5rem,4.4vw,2.5rem);
+  line-height:1.14;
+  letter-spacing:-.018em;
+  text-wrap:balance;
+}
+.quote-feature cite{
+  display:block;margin-top:1.1em;
+  font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  font-style:normal;
+  color:color-mix(in srgb, var(--brick-on) 82%, transparent);
+}
