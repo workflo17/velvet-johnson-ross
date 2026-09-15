@@ -3,7 +3,7 @@
 Live at **https://velvetjohnsonross.com**.
 
 Static site. No build step, no dependencies, no framework. Eight HTML pages, one
-stylesheet, six images.
+stylesheet, eight images.
 
 ```
 index.html        Home — hero, at a glance, her own words, focus areas,
@@ -20,6 +20,7 @@ assets/
   styles.css                 The entire visual system
   velvet-editorial.jpg       832×614 — home hero
   velvet-portrait-close.jpg  620×781 — Background lead
+  sistersong-clipping.jpg    1200×639 — SisterSong membership clipping, Background
   hamer-quote.jpg            640×839 — Fannie Lou Hamer poster
   movement-collage.jpg       750×750 — protest collage
   raised-fists.jpg           562×562 — #HerHousing artwork
