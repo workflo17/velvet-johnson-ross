@@ -1,25 +1,33 @@
 # Velvet A. Johnson-Ross — website
 
+Live at **https://velvetjohnsonross.com**.
+
 Static site. No build step, no dependencies, no framework. Eight HTML pages, one
-stylesheet, four images.
+stylesheet, six images.
 
 ```
-index.html        Home — hero, at-a-glance, focus areas, affiliations
-about.html        Background — the full narrative, with quotes
-experience.html   CV — consulting, prior roles, teaching, education, publications
-work.html         Record — key figures, HAVP funding chart, record ledger
-initiatives.html  Projects — The Eviction Fund in full, plus HOME
+index.html        Home — hero, at a glance, her own words, focus areas,
+                  affiliations, and the index of every other page
+about.html        Background — the narrative, the two names, Brooklyn, teaching
+experience.html   CV — practice, prior roles, teaching, education, publications,
+                  memberships, recognition, contact
+work.html         Record — key figures, HAVP funding chart, 9-entry ledger, projects
+initiatives.html  Projects — The Eviction Fund in full with budget, plus HOME
 herhousing.html   #HerHousing — the podcast, its research and its budget
 testimony.html    Her Feb 9 2021 testimony, reproduced in full
 press.html        Articles featuring her, org coverage, all sources
 assets/
-  styles.css                The entire visual system
-  velvet-headshot.jpg       504×756  — her own headshot (home hero)
-  herhousing-city.png       601×296  — #HerHousing brand illustration
-  velvet-portrait.jpg       877×877  — David Prize portrait (third-party)
-  velvet-portrait-wide.png  1024×452 — wide crop of the same
-vercel.json       Cache headers for assets
+  styles.css                 The entire visual system
+  velvet-editorial.jpg       832×614 — home hero
+  velvet-portrait-close.jpg  620×781 — Background lead
+  hamer-quote.jpg            640×839 — Fannie Lou Hamer poster
+  movement-collage.jpg       750×750 — protest collage
+  raised-fists.jpg           562×562 — #HerHousing artwork
+  justice-verb.jpg           777×482 — "Justice needs to be a verb"
+  herhousing-city.jpg        560×276 — #HerHousing brand illustration
+vercel.json       Cache headers
 robots.txt        Allows indexing
+sitemap.xml       All eight pages
 ```
 
 ## Theme
@@ -44,45 +52,32 @@ force a mode by URL — useful for sharing a specific look.
 
 ---
 
-## ⚠️ Before this goes public: photo rights
+## Navigation
 
-| Image | Source | Status |
-|---|---|---|
-| `velvet-headshot.jpg` | Her own #HerHousing deck | hers - used as the home hero |
-| `herhousing-city.png` | Her own #HerHousing deck | hers |
-| `velvet-portrait.jpg` / `-wide.png` | Photo by **Janick Gilpin**, courtesy of **The David Prize** | third-party |
+Three devices, and they have to stay in step when a page is added or reordered.
 
-The David Prize portrait is credited wherever it appears, but credit is not a licence.
-It now sits only on `about.html`, off the home page. **Confirm permission from the
-photographer and/or The David Prize before the site is publicly linked**, or remove it -
-the site works without it, since the hero uses her own headshot.
+**1. The top nav** is the same seven links on all eight pages. `#HerHousing` is
+deliberately not in it — it is a sub-page of Projects, reached from the home-page
+index, the Projects page, the Record page and the footer.
 
----
+**2. The pager** at the foot of every page runs *both* directions and walks the pages
+in this order, returning to the start:
 
-## Deploying to Vercel
-
-From this `site/` directory:
-
-```bash
-npx vercel deploy --prod
+```
+index → about → experience → work → initiatives → herhousing → testimony → press → index
 ```
 
-Or connect the folder to a Git repo and import it at vercel.com — framework preset
-**Other**, build command **none**, output directory **.**
+If you add a page, insert it in that chain — otherwise it is reachable only from the
+top nav, which is the bug this replaced. (The old chain skipped Experience and Projects
+entirely.)
 
-### Clean URLs (optional)
+**3. The on-page index** (`nav.onpage`) sits under the page header on every page with
+more than two sections. Each entry points at a `<section id>`; the ids are slugs of the
+`h2` text. If you rename an `h2`, update its `id` and the matching link, or use a
+hand-written `id` as `#eviction-fund` and `#record` do.
 
-To serve `/about` instead of `/about.html`, add `"cleanUrls": true` to
-`vercel.json`. Vercel will then 308-redirect the `.html` links. Left off by default
-so the links behave identically locally and in production.
-
-### Before launch
-
-- [ ] Resolve photo rights (above)
-- [ ] Replace the relative `og:image` paths with absolute URLs once the domain is
-      known — e.g. `https://yourdomain.com/assets/velvet-portrait.jpg`. Relative
-      OG paths are not reliably resolved by social/link-preview crawlers.
-- [ ] Have Velvet read every page and confirm the framing is how she wants it
+The home page also carries a `nav.routes` index of all seven other pages — it is the
+main way a visitor who scrolls rather than reads the nav gets anywhere.
 
 ---
 
@@ -100,15 +95,16 @@ toggle wins in both directions. Every token is declared on a bare `:root` first.
 Images opt in to two effects, so nothing is applied where it should not be:
 
 - `.portrait.cut` uses `mix-blend-mode: multiply` against a fixed light photo field, so
-  artwork shot on white (the David Prize portrait, the #HerHousing illustration) dissolves
-  into the page instead of showing as a white rectangle.
+  artwork shot on white dissolves into the page instead of showing as a white rectangle.
 - `.portrait.mono` applies greyscale, for imagery that is monochrome by intent.
 
-Her colour headshot uses neither, so it stays warm and full-colour.
+`.plate` sizes pictures by their own shape rather than the prose measure — a square
+image constrained to `--measure` (66ch) rendered 572px tall and swallowed the viewport.
 
 ### Chart colors
 
-The two series hues on `work.html` are **validated**, not chosen by eye:
+The two series hues on `work.html` and `herhousing.html` are **validated**, not chosen
+by eye:
 
 | | Light | Dark |
 |---|---|---|
@@ -133,7 +129,7 @@ All repeated blocks are copy-paste patterns with comment markers in the HTML.
 | An article featuring her | `press.html` | `<div class="press-row">` |
 | An Unlock NYC article | `press.html` | an `<a>` inside `.press-compact` |
 | An affiliation | `index.html` | `<div class="org-item">` |
-| An initiative | `work.html` | `<div class="init">` |
+| A project | `work.html` | `<a class="init">` — these link out to the Projects page |
 | A focus area | `index.html` | a `<div>` inside `.focus` |
 | A role on the CV | `experience.html` | `<div class="role-block">` |
 | A publication | `experience.html` | a `<div>` inside `.pubs` |
@@ -141,20 +137,38 @@ All repeated blocks are copy-paste patterns with comment markers in the HTML.
 Record entries carry a typed chip. Available kinds:
 `testimony` · `press` · `recognition` · `role` · `civic`
 
-The nav, footer and `<head>` are duplicated across the eight pages — if you change
-one, change all eight. (That duplication is the cost of having no build step; it is
-deliberate.)
+The nav, footer, pager and `<head>` are duplicated across the eight pages — if you
+change one, change all eight. (That duplication is the cost of having no build step; it
+is deliberate.) A new **section** also needs an `id` and a matching entry in that page's
+`nav.onpage`.
+
+---
+
+## Writing
+
+House style, enforced across the site:
+
+- **American spelling** — program, color, center, organizer, analyzed. (A mixed
+  British/American text shipped once; it reads as unedited.)
+- **Her words stay hers.** The testimony page is verbatim from the state record; resume
+  bullets are her phrasing. Don't smooth either.
+- **No editorial flourish in her voice.** Summarising closers ("the three threads are
+  the same thread"), antithesis ("not X but Y") and metaphor stand-ins for facts were
+  removed once already. Say what happened, with a date and a source.
+- **Em dashes are for appositives**, not for stapling two thoughts together. If a
+  sentence has two, it needs to be two sentences.
+- **Captions describe the picture**, they do not editorialise about it.
 
 ---
 
 ## Accuracy rules this site follows
 
-- She was a **2022 David Prize finalist, not a winner**. No source shows a win —
-  the Brooklyn winners that year were Geneva White and Mark Winston Griffith.
+- She was a **2022 David Prize finalist, not a winner** — no source shows a win; the
+  Brooklyn winners that year were Geneva White and Mark Winston Griffith.
 - **She publishes under two names** — her own and **Fannie Lou Diane**. Search both.
 - The **Unlock NYC press list is coverage of the organization**, kept in its own
-  labelled section. She does appear in several of those pieces herself - usually under
-  **Fannie Lou Diane** - and the confirmed ones are promoted into "Featuring her".
+  labelled section. She does appear in several of those pieces herself — usually under
+  **Fannie Lou Diane** — and the confirmed ones are promoted into "Featuring her".
 - **HAVP launching is not claimed as her personal win.** She testified for the bill
   in 2021; the page states the outcome and lets the reader connect it.
 - Her **age and home address are omitted** deliberately. Her cancer history appears
@@ -162,3 +176,14 @@ deliberate.)
 
 Full research trail, including the open questions still worth asking her, is in
 `../RESEARCH-NOTES.md`.
+
+---
+
+## Deploying
+
+The repo is Git-linked to the Vercel project `velvet-johnson-ross`; pushing to `main`
+deploys. `velvetjohnsonross.com` is the canonical host and `www` redirects to it.
+
+`vercel.json` caches `/assets/*.{jpg,png,webp,avif,woff2}` for a year and immutable, and
+HTML and CSS `max-age=0, must-revalidate`. **Keep CSS out of the immutable bucket** —
+`styles.css` has no content hash, so a long cache freezes returning visitors on old CSS.
