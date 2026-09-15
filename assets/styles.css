@@ -1536,3 +1536,34 @@ a.init:hover .go{color:var(--brick-ink)}
    width while still letting it shrink on a narrow screen. */
 .portrait{width:fit-content;max-width:100%}
 .portrait img{height:auto}
+
+/* ==========================================================================
+   VERTICAL RHYTHM — the gaps were roughly 40% too big, everywhere
+
+   Measured at 1024px across all eight pages: 17-26% of every page was blank
+   runs over 55px, median 73-83px, worst 127px. The cause was additive, not
+   one bad number:
+
+     .role-block / .entry / .press-row / .figures div carry 22-28px of their
+     own bottom padding, and then .stack added another 72px on top of it.
+     100px between the end of a list and the next heading, 23 times on
+     Experience alone.
+
+   Every section already opens with a ruled .s-head, so the break is marked
+   typographically and does not need to be marked again in whitespace.
+   ========================================================================== */
+
+.stack{gap:clamp(30px,3.8vw,50px)}                      /* was 48-88px (72 @1024) */
+.page{padding-block:clamp(26px,3.2vw,44px) clamp(32px,4vw,58px)}  /* was 61/82 @1024 */
+.s-head{margin-bottom:clamp(15px,2vw,22px)}             /* was 20-30px */
+
+/* In a flex column with `gap`, a child's own block margin is pure addition —
+   it double-spaces whatever the gap already set. */
+.page.stack > *{margin-block:0}
+
+/* These two sit inside prose and still need to separate from it, but 38px was
+   set to match the old section rhythm. */
+.quote-inset{margin-block:clamp(18px,2.4vw,28px)}
+.plate-pair{margin:clamp(18px,2.4vw,28px) 0}
+
+.onpage{margin-top:clamp(16px,2vw,24px)}
