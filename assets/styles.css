@@ -1620,7 +1620,7 @@ a.init:hover .go{color:var(--brick-ink)}
    picture now follows the text at readable width, the way the lead portrait
    already does, and the prose runs as one clean column.
    ========================================================================== */
-.plate-pair{display:block;margin:0}
+.plate-pair{display:block;margin:0 0 clamp(20px,2.6vw,28px)}
 .plate-pair > .prose{max-width:var(--measure)}
 .plate-pair .plate{
   max-width:min(420px,100%);
